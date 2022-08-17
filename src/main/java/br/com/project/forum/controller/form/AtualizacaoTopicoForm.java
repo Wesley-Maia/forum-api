@@ -5,11 +5,10 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.project.forum.modelo.Curso;
 import br.com.project.forum.modelo.Topico;
-import br.com.project.forum.repository.CursoRepository;
+import br.com.project.forum.repository.TopicoRepository;
 
-public class TopicoForm {
+public class AtualizacaoTopicoForm {
 
 	// Anotações do Bean Validation
 	@NotNull
@@ -20,9 +19,6 @@ public class TopicoForm {
 	@NotEmpty
 	@Length(min = 5)
 	private String mensagem;
-	@NotNull
-	@NotEmpty
-	private String nomeCurso;
 
 	public String getTitulo() {
 		return titulo;
@@ -39,18 +35,14 @@ public class TopicoForm {
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
-
-	public String getNomeCurso() {
-		return nomeCurso;
-	}
-
-	public void setNomeCurso(String nomeCurso) {
-		this.nomeCurso = nomeCurso;
-	}
-
-	public Topico converter(CursoRepository cursoRepository) {
-		Curso curso = cursoRepository.findByNome(nomeCurso);
-		return new Topico(titulo, mensagem, curso);
+	
+	public Topico atualizar(Long id, TopicoRepository topicoRepository) {
+		Topico topico = topicoRepository.getReferenceById(id);
+		
+		topico.setTitulo(this.titulo);
+		topico.setMensagem(this.mensagem);
+		
+		return topico;
 	}
 
 }
