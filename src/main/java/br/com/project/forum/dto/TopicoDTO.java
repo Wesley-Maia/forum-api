@@ -6,36 +6,38 @@ import java.util.stream.Collectors;
 import br.com.project.forum.modelo.Topico;
 
 public class TopicoDTO {
-  private Long id;
-  private String titulo;
-  private String mensagem;
-  private LocalDateTime dataCriacao;
+	
+	private Long id;
+	private String titulo;
+	private String mensagem;
+	private LocalDateTime dataCriacao;
 
-  public TopicoDTO(Topico topico) {
-      this.id = topico.getId();
-      this.titulo = topico.getTitulo();
-      this.mensagem = topico.getMensagem();
-      this.dataCriacao = topico.getDataCriacao();
-  }
+	public TopicoDTO(Topico topico) {
+		this.id = topico.getId();
+		this.titulo = topico.getTitulo();
+		this.mensagem = topico.getMensagem();
+		this.dataCriacao = topico.getDataCriacao();
+		
+	}
 
-  public Long getId() {
-      return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public String getTitulo() {
-      return titulo;
-  }
+	public String getTitulo() {
+		return titulo;
+	}
 
-  public String getMensagem() {
-      return mensagem;
-  }
+	public String getMensagem() {
+		return mensagem;
+	}
 
-  public LocalDateTime getDataCriacao() {
-      return dataCriacao;
-  }
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
 
-  public static List<TopicoDTO> converter(List<Topico> topicos) {
-      return topicos.stream().map(TopicoDTO::new).collect(Collectors.toList());
-  }
-  
+	public static List<TopicoDTO> converter(List<Topico> topicos) {
+		return topicos.stream().map(TopicoDTO::new).collect(Collectors.toList());
+	}
+
 }

@@ -2,18 +2,21 @@ package br.com.project.forum.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.project.forum.controller.dto.DetalhesDoTopicoDTO;
 import br.com.project.forum.controller.form.TopicoForm;
 import br.com.project.forum.dto.TopicoDTO;
 import br.com.project.forum.modelo.Topico;
@@ -53,6 +56,17 @@ public class TopicosController {
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(new TopicoDTO(topico));
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<DetalhesDoTopicoDTO> detalhar(@PathVariable Long id) {
+		Optional<Topico> topico = topicoRepository.findById(id);
+
+		if (topico.isPresent()) {
+			return ResponseEntity.ok(new DetalhesDoTopicoDTO(topico.get()));
+		}
+
+		return ResponseEntity.notFound().build();
 	}
 
 }
